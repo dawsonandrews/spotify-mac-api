@@ -29,6 +29,7 @@ function currentTrack(callback) {
 }
 
 app.get('/', function (req, res) {
+  sh('osascript -e \'tell app "Spotify" to play track "spotify:artist:4Z8W4fKeB5YxbusRsdQVPb"\'');
   res.send('Hello World!');
 });
 
@@ -164,7 +165,8 @@ app.post('/search', function (req, res) {
         console.log("Spotify album results", album);
 
         if (album) {
-          return res.send("Found a album by the name of "+album.name+". Now, to continue this quiz... Can you name a song?");
+          options.result = {first: album.uri};
+          return res.send("Found an album by the name of "+album.name+". Hubot play 1 to play it.");
         }
 
         res.send("Couldn’t find that album.", 404);
@@ -176,7 +178,10 @@ app.post('/search', function (req, res) {
         console.log("Spotify artist results", artist);
 
         if (artist) {
-          return res.send("Got it. I found "+artist.name+". Now, to continue this quiz... Can you name a song?");
+          song = tracks[0];
+          res.send("Found it.. use Hubot play 1 for “"+song.name+"” by "+song.artists[0].name);
+          options.result = {first: artist.uri};
+          return res.send("Got it. Use Hubot play 1 for "+artist.name+".");
         }
 
         res.send("Couldn’t find that artist.", 404);
