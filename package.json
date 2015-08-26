@@ -10,6 +10,7 @@
   "dependencies": {
     "body-parser": "^1.13.3",
     "express": "^4.13.3",
+    "minimist": "^1.2.0",
     "sh": "0.0.3",
     "spotify": "^0.3.0",
     "underscore": "^1.8.3"

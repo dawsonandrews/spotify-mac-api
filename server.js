@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 
+var args = require('minimist')(process.argv.slice(2));
 var _ = require('underscore');
 var sh = require('sh');
 var spotify = require('spotify');
@@ -7,8 +8,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 // Configuration
-var port = process.env.PORT || 3344;
-var secret = process.env.SHARED_SECRET || "sekret";
+var port = process.env.PORT || args.p || 3344;
+var secret = process.env.SHARED_SECRET || args.s || "sekret";
 
 // Runtime options
 var options = {
