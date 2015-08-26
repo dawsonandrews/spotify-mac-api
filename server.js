@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 var _ = require('underscore');
 var sh = require('sh');
 var spotify = require('spotify');

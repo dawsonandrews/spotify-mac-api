@@ -4,6 +4,9 @@
   "description": "Simple HTTP API endpoints to control a local spotify player",
   "main": "server.js",
   "repository": "git@github.com:alternatelabs/spotify-control-api.git",
+  "bin": {
+    "spotify-control-api": "server.js"
+  },
   "dependencies": {
     "body-parser": "^1.13.3",
     "express": "^4.13.3",
