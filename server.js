@@ -29,6 +29,16 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
+// Ensure secret is correct
+app.use(function(req, res, next) {
+  var provided_secret = req.body.secret || req.query.secret;
+  if (provided_secret === secret) {
+    return next();
+  }
+
+  res.send("Secret does not match", 401);
+});
+
 // Handle errors
 app.use(function(err, req, res, next) {
   console.error(err.stack);
