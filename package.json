@@ -1,0 +1,16 @@
+{
+  "name": "spotify-control-api",
+  "version": "0.1.0",
+  "description": "Simple HTTP API endpoints to control a local spotify player",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.13.3",
+    "spotify": "^0.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pete Hawkins",
+  "license": "MIT"
+}
