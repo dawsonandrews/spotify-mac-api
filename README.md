@@ -33,6 +33,18 @@ Toggles muting the volume
 
 Returns response text to queue up a play
 
-### POST /play/:track
+### POST /play/track/:name
 
-**track**
+**name** - name of the song to find and play
+
+### POST /play/artist/:name
+
+**name** - name of the artist to find and play
+
+### POST /play/album/:name
+
+**name** - name of the album to find and play
+
+### POST /play/queue/:id
+
+**id** - ID of the song to play from search results

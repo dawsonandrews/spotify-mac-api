@@ -194,50 +194,92 @@ app.post('/search', function (req, res) {
 });
 
 // play a track or add a searched song to the play queue and play it
-app.post('/play/:id', function (req, res) {
+app.post('/play/:type/:id', function (req, res) {
   var id = req.params.id;
+  var type = req.params.type;
 
-  console.log("Play: "+ id);
+  if (_.indexOf(['track', 'artist', 'album', 'queue'], type) < 0) {
+    // default to artist
+    type = "artist";
+  }
 
-  switch(id) {
-    case "1":
-      if (_.isObject(options.result) && _.isString(options.result.first)) {
-        sh('osascript -e \'tell app "Spotify" to play track "'+ options.result.first +'"\'');
-      }
-      res.send("Okay, sure why not");
-      break;
+  console.log("Play "+ type +": "+ id);
 
-    case "2":
-      if (_.isObject(options.result) && _.isString(options.result.second)) {
-        sh('osascript -e \'tell app "Spotify" to play track "'+ options.result.second +'"\'');
-      }
-      res.send("Hah, this is my favorite song");
-      break;
-
-    case "3":
-      if (_.isObject(options.result) && _.isString(options.result.third)) {
-        sh('osascript -e \'tell app "Spotify" to play track "'+ options.result.third +'"\'');
-      }
-      res.send("Are you really sure? Okay, I'll play it anyway");
-      break;
-
-    default:
-      spotify.search({
-        type: "track",
-        query: id
-      }, function(err, data) {
-        if (err) return res.send("whoops", 400);
-
-        var song = data.tracks.items[0];
-
-        if (song) {
-          sh('osascript -e \'tell app "Spotify" to play track "'+ song.uri +'"\'');
-          res.send("Found it, playing: “"+song.name+"” by "+song.artists[0].name+" from "+song.album.name);
+  if (type === "queue") {
+    switch(id) {
+      case "1":
+        if (_.isObject(options.result) && _.isString(options.result.first)) {
+          sh('osascript -e \'tell app "Spotify" to play track "'+ options.result.first +'"\'');
         }
-        else {
-          res.send("Couldn’t find that track.", 404);
+        res.send("Okay, sure why not");
+        break;
+
+      case "2":
+        if (_.isObject(options.result) && _.isString(options.result.second)) {
+          sh('osascript -e \'tell app "Spotify" to play track "'+ options.result.second +'"\'');
         }
-      });
+        res.send("Hah, this is my favorite song");
+        break;
+
+      case "3":
+        if (_.isObject(options.result) && _.isString(options.result.third)) {
+          sh('osascript -e \'tell app "Spotify" to play track "'+ options.result.third +'"\'');
+        }
+        res.send("Are you really sure? Okay, I'll play it anyway");
+        break;
+      default:
+        res.send("Use numbers 1 to 3");
+    }
+  }
+  else {
+    spotify.search({
+      type: type,
+      query: id
+    }, function(err, data) {
+      if (err) return res.send("whoops", 400);
+
+      var uri_to_play, now_playing;
+
+      switch(type) {
+        case "track":
+          var song = data.tracks.items[0];
+
+          if (song) {
+            now_playing = song.name;
+            uri_to_play = song.uri;
+          }
+
+          break;
+
+        case "artist":
+          var artist = data.artists.items[0];
+
+          if (artist) {
+            uri_to_play = artist.uri;
+            now_playing = artist.name;
+          }
+
+          break;
+
+        case "album":
+          var album = data.albums.items[0];
+
+          if (album) {
+            uri_to_play = album.uri;
+            now_playing = album.name;
+          }
+
+          break;
+      }
+
+      if (_.isString(uri_to_play)) {
+        sh('osascript -e \'tell app "Spotify" to play track "'+ uri_to_play +'"\'');
+        res.send("Now playing: “"+now_playing+"”");
+      }
+      else {
+        res.send("Whoops, couldn’t find that", 404);
+      }
+    });
   }
 });
 
@@ -247,5 +289,5 @@ var server = app.listen(port, "0.0.0.0", function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Example app listening at http://%s:%s', host, port);
+  console.log('Spotify control API listening at http://%s:%s', host, port);
 });
