@@ -46,7 +46,7 @@ app.use(function(err, req, res, next) {
 });
 
 function currentTrack(callback) {
-  var song = sh('osascript src/scripts/current_song.scpt');
+  var song = sh('osascript '+__dirname+'/src/scripts/current_song.scpt');
   song.result(function(track) {
     callback(track);
   });

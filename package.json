@@ -1,6 +1,6 @@
 {
   "name": "spotify-control-api",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Simple HTTP API endpoints to control a local spotify player",
   "main": "server.js",
   "repository": "git@github.com:alternatelabs/spotify-control-api.git",
