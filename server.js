@@ -21,6 +21,12 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
+// Handle errors
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 function currentTrack(callback) {
   var song = sh('osascript src/scripts/current_song.scpt');
   song.result(function(track) {
@@ -178,8 +184,6 @@ app.post('/search', function (req, res) {
         console.log("Spotify artist results", artist);
 
         if (artist) {
-          song = tracks[0];
-          res.send("Found it.. use Hubot play 1 for “"+song.name+"” by "+song.artists[0].name);
           options.result = {first: artist.uri};
           return res.send("Got it. Use Hubot play 1 for "+artist.name+".");
         }
