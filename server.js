@@ -13,8 +13,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 // Configuration
-var port = process.env.PORT || args.port || 3344;
-var secret = process.env.SHARED_SECRET || args.secret || "sekret";
+var port = args.port || process.env.PORT || 3344;
+var secret = args.secret || process.env.SHARED_SECRET || "sekret";
 
 // Runtime options
 var options = {
