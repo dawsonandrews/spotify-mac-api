@@ -52,4 +52,33 @@ Returns response text to queue up a play
 
 ## Running your local host on the www
 
-Use [ngrok](https://ngrok.com/docs)
+Use forever to run the server
+
+```sh
+$ npm i -g forever
+$ forever start server.js
+```
+
+Use [ngrok](https://ngrok.com/docs) to expose the server on the web
+
+```sh
+# Start one off
+$ ngrok http -subdomain=mysubdodmainname 3344
+```
+
+For easier use you can use the ngrok config file in `~/.ngrok2/ngrok.yml` and make the contents something like:
+
+```yml
+authtoken: some-sekret-token
+tunnels:
+  spotify_api:
+    proto: http
+    addr: 3344
+    subdomain: your-ngrok-subdomain
+```
+
+Once this is setup you can start ngrok with:
+
+```sh
+$ ngrok start spotify_api
+```
