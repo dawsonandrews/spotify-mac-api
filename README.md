@@ -2,7 +2,50 @@
 
 Run this locally on a mac and it provides you with an HTTP API to control a local spotify instance. This is useful if you want to write scripts to control the music in your office from [Hubot](https://hubot.github.com/) etc.
 
-## API
+
+## Running the server
+
+Run this directly from npm
+
+```sh
+$ npm i -g spotify-control-api
+$ spotify-control-api -p 3344 -s myWonderfulSekret
+```
+
+Clone this repository and use forever to run the server
+
+```sh
+$ npm i -g forever
+$ forever start server.js -p 3344 -s myWonderfulSekret
+```
+
+## Running your local host on the www
+
+Use [ngrok](https://ngrok.com/docs) to expose the server on the web
+
+```sh
+# Start one off
+$ ngrok http -subdomain=mysubdodmainname 3344
+```
+
+For easier use you can use the ngrok config file in `~/.ngrok2/ngrok.yml` and make the contents something like:
+
+```yml
+authtoken: some-sekret-token
+tunnels:
+  spotify_api:
+    proto: http
+    addr: 3344
+    subdomain: your-ngrok-subdomain
+```
+
+Once this is setup you can start ngrok with:
+
+```sh
+$ ngrok start spotify_api
+```
+
+## API endpoints
 
 The following endpoints are available:
 
@@ -48,44 +91,3 @@ Returns response text to queue up a play
 ### POST /play/queue/:id
 
 **id** - ID of the song to play from search results
-
-
-## Running your local host on the www
-
-Run this directly from npm
-
-```sh
-$ npm i -g spotify-control-api
-$ spotify-control-api -p 3344 -s myWonderfulSekret
-```
-
-Clone this repository and use forever to run the server
-
-```sh
-$ npm i -g forever
-$ forever start server.js -p 3344 -s myWonderfulSekret
-```
-
-Use [ngrok](https://ngrok.com/docs) to expose the server on the web
-
-```sh
-# Start one off
-$ ngrok http -subdomain=mysubdodmainname 3344
-```
-
-For easier use you can use the ngrok config file in `~/.ngrok2/ngrok.yml` and make the contents something like:
-
-```yml
-authtoken: some-sekret-token
-tunnels:
-  spotify_api:
-    proto: http
-    addr: 3344
-    subdomain: your-ngrok-subdomain
-```
-
-Once this is setup you can start ngrok with:
-
-```sh
-$ ngrok start spotify_api
-```
