@@ -52,11 +52,18 @@ Returns response text to queue up a play
 
 ## Running your local host on the www
 
-Use forever to run the server
+Run this directly from npm
+
+```sh
+$ npm i -g spotify-control-api
+$ spotify-control-api -p 3344 -s myWonderfulSekret
+```
+
+Clone this repository and use forever to run the server
 
 ```sh
 $ npm i -g forever
-$ forever start server.js
+$ forever start server.js -p 3344 -s myWonderfulSekret
 ```
 
 Use [ngrok](https://ngrok.com/docs) to expose the server on the web
