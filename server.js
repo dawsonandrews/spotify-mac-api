@@ -35,7 +35,6 @@ function currentTrack(callback) {
 }
 
 app.get('/', function (req, res) {
-  sh('osascript -e \'tell app "Spotify" to play track "spotify:artist:4Z8W4fKeB5YxbusRsdQVPb"\'');
   res.send('Hello World!');
 });
 

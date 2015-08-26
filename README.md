@@ -48,3 +48,8 @@ Returns response text to queue up a play
 ### POST /play/queue/:id
 
 **id** - ID of the song to play from search results
+
+
+## Running your local host on the www
+
+Use [ngrok](https://ngrok.com/docs)
