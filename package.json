@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "description": "Simple HTTP API endpoints to control a local spotify player",
   "main": "server.js",
+  "repository": "git@github.com:alternatelabs/spotify-control-api.git",
   "dependencies": {
+    "body-parser": "^1.13.3",
     "express": "^4.13.3",
-    "spotify": "^0.3.0"
+    "sh": "0.0.3",
+    "spotify": "^0.3.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {},
   "scripts": {
