@@ -1,11 +1,11 @@
 {
-  "name": "spotify-control-api",
+  "name": "spotify-mac-api",
   "version": "0.1.2",
-  "description": "Simple HTTP API endpoints to control a local spotify player",
+  "description": "HTTP API to control a spotify player on Mac OS",
   "main": "server.js",
-  "repository": "git@github.com:alternatelabs/spotify-control-api.git",
+  "repository": "git@github.com:alternatelabs/spotify-mac-api.git",
   "bin": {
-    "spotify-control-api": "server.js"
+    "spotify-mac-api": "server.js"
   },
   "dependencies": {
     "body-parser": "^1.13.3",
