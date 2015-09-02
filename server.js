@@ -208,6 +208,19 @@ app.post('/search', function (req, res) {
         res.send("Couldn’t find that artist.", 404);
         break;
 
+      case "playlist":
+        var playlist = data.playlists.items[0];
+
+        console.log("Spotify playlist results", playlist);
+
+        if (playlist) {
+          options.result = {first: playlist.uri};
+          return res.send("Got it. Use Hubot play 1 for "+playlist.name+".");
+        }
+
+        res.send("Couldn’t find that playlist.", 404);
+        break;
+
       default:
         res.send("I’ve no idea", 404);
     }
@@ -219,7 +232,7 @@ app.post('/play/:type/:id', function (req, res) {
   var id = req.params.id;
   var type = req.params.type;
 
-  if (_.indexOf(['track', 'artist', 'album', 'queue'], type) < 0) {
+  if (_.indexOf(['track', 'artist', 'album', 'queue', 'playlist'], type) < 0) {
     // default to artist
     type = "artist";
   }
@@ -288,6 +301,16 @@ app.post('/play/:type/:id', function (req, res) {
           if (album) {
             uri_to_play = album.uri;
             now_playing = album.name;
+          }
+
+          break;
+
+        case "playlist":
+          var playlist = data.playlists.items[0];
+
+          if (playlist) {
+            uri_to_play = playlist.uri;
+            now_playing = playlist.name;
           }
 
           break;

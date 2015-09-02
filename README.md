@@ -46,7 +46,7 @@ Toggles muting the volume
 
 ### POST /search?type=track&query=mr%20brightside
 
-**type** - track, artist or album
+**type** - track, artist, album or playlist
 **query** - the search query
 
 Returns response text to queue up a play
@@ -62,6 +62,10 @@ Returns response text to queue up a play
 ### POST /play/album/:name
 
 **name** - name of the album to find and play
+
+### POST /play/playlist/:name
+
+**name** - name of the playlist to find and play
 
 ### POST /play/queue/:id
 
