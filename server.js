@@ -156,27 +156,27 @@ app.post('/search', function (req, res) {
 
         if (tracks.length == 1) {
           song = tracks[0];
-          res.send("Found it.. use Hubot play 1 for “"+song.name+"” by "+song.artists[0].name);
+          res.send("Found it.. use Hubot play queue 1 for “"+song.name+"” by "+song.artists[0].name);
           options.result = {first: tracks[0].uri};
         }
         else if (tracks.length == 2) {
           result = [
-            "Use Hubot play 1 for “"+tracks[0].name+"” by "+tracks[0].artists[0].name,
-            "or use Hubot play 2 for “"+tracks[1].name+"” by "+tracks[1].artists[0].name
+            "Use Hubot play queue 1 for “"+tracks[0].name+"” by "+tracks[0].artists[0].name,
+            "or use Hubot play queue 2 for “"+tracks[1].name+"” by "+tracks[1].artists[0].name
           ];
           res.send(result.join("\n"));
           options.result = {first: tracks[0].uri, second: tracks[1].uri};
         }
         else if (tracks.length > 2) {
           result = [
-            "Use Hubot play 1 for “"+tracks[0].name+"” by "+tracks[0].artists[0].name,
-            "or use Hubot play 2 for “"+tracks[1].name+"” by "+tracks[1].artists[0].name,
-            "or play 3 for “"+tracks[2].name+"” by "+tracks[2].artists[0].name
+            "Use Hubot play queue 1 for “"+tracks[0].name+"” by "+tracks[0].artists[0].name,
+            "or use Hubot play queue 2 for “"+tracks[1].name+"” by "+tracks[1].artists[0].name,
+            "or play queue 3 for “"+tracks[2].name+"” by "+tracks[2].artists[0].name
           ];
           res.send(result.join("\n"));
           options.result = {first: tracks[0].uri, second: tracks[1].uri, third: tracks[2].uri};
         }
-        else if (data.tracks.length < 1) {
+        else if (tracks.length < 1) {
           res.send("I couldn’t find that song", 404);
         }
         break;
@@ -209,13 +209,35 @@ app.post('/search', function (req, res) {
         break;
 
       case "playlist":
-        var playlist = data.playlists.items[0];
+        var playlists = data.playlists.items;
 
-        console.log("Spotify playlist results", playlist);
+        console.log("Spotify playlists results", playlists);
 
-        if (playlist) {
-          options.result = {first: playlist.uri};
-          return res.send("Got it. Use Hubot play 1 for "+playlist.name+".");
+
+        if (playlists.length == 1) {
+          song = playlists[0];
+          res.send("Found it.. use Hubot play queue 1 for “"+song.name+"”");
+          options.result = {first: playlists[0].uri};
+          return;
+        }
+        else if (playlists.length == 2) {
+          result = [
+            "Use Hubot play queue 1 for “"+playlists[0].name+"”",
+            "or use Hubot play queue 2 for “"+playlists[1].name+"”"
+          ];
+          res.send(result.join("\n"));
+          options.result = {first: playlists[0].uri, second: playlists[1].uri};
+          return;
+        }
+        else if (playlists.length > 2) {
+          result = [
+            "Use Hubot play queue 1 for “"+playlists[0].name+"”",
+            "or use Hubot play queue 2 for “"+playlists[1].name+"”",
+            "or play queue 3 for “"+playlists[2].name+"”"
+          ];
+          res.send(result.join("\n"));
+          options.result = {first: playlists[0].uri, second: playlists[1].uri, third: playlists[2].uri};
+          return;
         }
 
         res.send("Couldn’t find that playlist.", 404);
