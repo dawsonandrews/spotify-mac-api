@@ -18,6 +18,8 @@ Use [ngrok](https://ngrok.com/docs) to expose the server on the web
 $ ngrok http 3344
 ```
 
+Checkout [this guide](https://github.com/alternatelabs/spotify-mac-api/wiki/Running-on-startup-on-OS-X) using launchd to start on boot and keep it running.
+
 ## API endpoints
 
 ### Security
